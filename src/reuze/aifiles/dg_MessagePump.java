@@ -24,7 +24,15 @@ public class dg_MessagePump {
 	public static List<dg_Message> m_messageQueue = new ArrayList<dg_Message>();
 	public static List<dg_Message> m_messageIncomingQueue = new ArrayList<dg_Message>();
 	
-	public static int m_uniqueID;
+	
+	public class MessageReciever {
+		public int m_ID;
+		public MessageReciever() {
+			this.m_ID = dg_MessagePump.GetUniqueMessageID();
+		}		
+	}
+	
+	public static int m_uniqueID = 0;
 	public static int GetUniqueMessageID()
 	{
 		return m_uniqueID++;

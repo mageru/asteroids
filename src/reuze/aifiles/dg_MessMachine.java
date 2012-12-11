@@ -1,38 +1,46 @@
 package reuze.aifiles;
 
-public class dg_ChangeStateCallback  extends dg_Callback{
+import java.util.ArrayList;
 
-	//---------------------------------------------------------
-	private void function(Object parent, RefObject<Message> msg)
-	{
-		int newState = ((DataMessage<Integer>*)msg.argvalue).m_dataStorage;
-		((MessMachine)parent).SetGoalID(newState);
-	}
-}
+import reuze.aifiles.dg_MessagePump;
+import reuze.aifiles.dg_Messages.MSGState;
+import reuze.aifiles.dg_Messages.Types;
 
-public class dg_MessMachine extends MessState
+public class dg_MessMachine extends dg_MessState
 {
+	//data
+	public int m_type;
+	public int type;
+	protected ArrayList<dg_MessState> m_states;
+	protected dg_MessState m_currentState;
+	protected dg_MessState m_defaultState;
+	protected dg_MessState m_goalState;
+	protected int m_goalID;
+	protected dg_ChangeStateCallback m_changeStateCallback = new dg_ChangeStateCallback();
 	//constructor/functions
 
 	//---------------------------------------------------------
-	public dg_MessMachine(int type)
-	{
-		this(type, null);
-	}
+/**
 	public dg_MessMachine()
 	{
-		this(MFSM_MACH_NONE, null);
+		this.type = MSGState.MFSM_STATE_NONE.getCode();
+		this.m_parent = null;
 	}
-//C++ TO JAVA CONVERTER NOTE: Java does not allow default values for parameters. Overloaded methods are inserted above.
-//ORIGINAL LINE: MessMachine(int type = MFSM_MACH_NONE, Control* parent = null): MessState(type,parent)
-	public dg_MessMachine(int type, RefObject<Control> parent)
+	public dg_MessMachine(int type)
 	{
-		super(type,parent.argvalue);
+		
+		this.m_type = type;
+		this.m_parent = null;
+	}
+**/
+	public dg_MessMachine(int type, RefObject<dg_Control> parent)
+	{
+		super(type,parent);
 		m_currentState = null;
 		m_defaultState = null;
 		m_goalState = null;
 	
-		MessagePump.Instance().RegisterForMessage(AnonymousEnum.MESSAGE_CHANGE_STATE,this,GetMessageID(),m_changeStateCallback);
+		dg_MessagePump.RegisterForMessage(Types.MESSAGE_CHANGE_STATE.getCode(),this,GetMessageID(),m_changeStateCallback);
 	}
 
 	//---------------------------------------------------------
@@ -67,11 +75,11 @@ public class dg_MessMachine extends MessState
 	}
 
 	//---------------------------------------------------------
-	public void AddState(RefObject<MessState> state)
+	public void AddState(RefObject<dg_MessState> state)
 	{
-		m_states.push_back(state.argvalue);
+		m_states.add(state.argvalue);
 	}
-	public void SetDefaultState(RefObject<MessState> state)
+	public void SetDefaultState(RefObject<dg_MessState> state)
 	{
 		m_defaultState = state.argvalue;
 	}
@@ -91,9 +99,9 @@ public class dg_MessMachine extends MessState
 		//in the list, and switch to it, otherwise, quit out
 		for(int i =0;i<m_states.size();i++)
 		{
-			if(m_states[i].m_type == goal)
+			if(m_states.get(i).m_type == goal)
 			{
-				m_goalState = m_states[i];
+				m_goalState = m_states.get(i);
 				return true;
 			}
 		}
@@ -110,21 +118,14 @@ public class dg_MessMachine extends MessState
 	
 		//init all the states
 		for(int i =0;i<m_states.size();i++)
-			m_states[i].Init();
+			m_states.get(i).Init();
 	
 		//and now enter the m_defaultState, if any
 		if (m_currentState != null)
 			m_currentState.Enter();
 	}
 
-	//data
-	public int m_type;
-	protected std.vector<MessState*> m_states;
-	protected MessState m_currentState;
-	protected MessState m_defaultState;
-	protected MessState m_goalState;
-	protected int m_goalID;
-	protected ChangeStateCallback m_changeStateCallback = new ChangeStateCallback();
+
 }
 //----------------------------------------------------------------------------------------
 //	Copyright © 2006 - 2008 Tangible Software Solutions Inc.
