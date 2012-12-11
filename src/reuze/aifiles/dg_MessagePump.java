@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import reuze.aifiles.dg_Message;
+import reuze.aifiles.dg_Message.DataMessage;
 import reuze.aifiles.dg_Messages;
 import reuze.aifiles.dg_MessageType;
 import reuze.aifiles.dg_Messages.AnonymousEnum;
@@ -109,7 +110,7 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public static int RegisterForMessage(int type, Object parent, int objectID, RefObject<Callback> cBack)
+	public static int RegisterForMessage(int type, Object parent, int objectID, RefObject<dg_Callback> cBack)
 	{
 		//only register once
 		dg_MessageType mType = m_messageTypes.get(type);
@@ -167,7 +168,7 @@ public class dg_MessagePump {
 		std.map.iterator geType*>iterator mType;
 		for(mType = m_messageTypes.begin();mType != m_messageTypes.end(); ++mType)
 		{
-			std.list.iterator g*>iterator msgReg;
+			Iterator msgRegItr = msgReg.iterator();
 			for(msgReg =mType.second.m_messageRegistrations.begin();msgReg!=mType.second.m_messageRegistrations.end();)
 			{
 				if((*msgReg).m_objectID == objectID)
@@ -183,9 +184,9 @@ public class dg_MessagePump {
 		}
 	}
 	//---------------------------------------------------------
-	public static void SendMessage(RefObject<dg_Message> newMessage)
+	public static void SendMessage(DataMessage<Integer> newMsg)
 	{
-		m_messageIncomingQueue.add(newMessage.argvalue);
+		m_messageIncomingQueue.add(newMsg);
 	}
 
 	//---------------------------------------------------------

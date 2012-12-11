@@ -12,7 +12,7 @@ public class dg_MCallBacks {
 		{
 			DataMessage<Integer> newMsg = (DataMessage<Integer>) new dg_Message(AnonymousEnum.MESSAGE_CHANGE_STATE,Types.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((MessState)parent).GetMessageID();
-			MessagePump.Instance().SendMessage(newMsg);
+			dg_MessagePump.SendMessage(newMsg);
 		}
 	}
 	public class ApproachCallback extends dg_Callback
@@ -24,7 +24,7 @@ public class dg_MCallBacks {
 			DataMessage<Integer> newMsg = new DataMessage<Integer>(AnonymousEnum.MESSAGE_CHANGE_STATE,AnonymousEnum.MFSM_STATE_APPROACH);
 			newMsg.m_fromID = ((MessState)parent).GetMessageID();
 			;
-			MessagePump.Instance().SendMessage(newMsg);
+			dg_MessagePump.SendMessage(newMsg);
 		}
 	}
 	public class AttackCallback extends dg_Callback
