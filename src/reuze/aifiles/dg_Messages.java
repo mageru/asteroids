@@ -1,0 +1,89 @@
+package reuze.aifiles;
+
+import java.util.List;
+import reuze.aifiles.dg_Callback;
+
+public abstract class dg_Messages {
+	public static enum RegState {
+		REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM,
+		REGISTER_ERROR_ALREADY_REGISTERED,
+		REGISTER_MESSAGE_OK
+	}
+	
+	public static enum Types {
+		MESSAGE_DEFAULT, 
+		MESSAGE_WILL_COLLIDE, 
+		MESSAGE_WONT_COLLIDE, 
+		MESSAGE_NO_ASTEROIDS, 
+		MESSAGE_NO_POWERUPS, 
+		MESSAGE_ASTEROID_FAR, 
+		MESSAGE_ASTEROID_NEAR, 
+		MESSAGE_POWERUP_NEAR, 
+		MESSAGE_POWERUP_FAR, 
+		MESSAGE_CHANGE_STATE, 
+		MESSAGE_SHIP_TOTAL_STOP,
+		MESSAGE_TOKEN_PSCAN, 
+		MESSAGE_TOKEN_MAXSPEED, 
+		MESSAGE_TOKEN_APDIST, 
+		MESSAGE_TOKEN_ATDIST, 
+		MESSAGE_TOKEN_SAFERAD, 
+		MESSAGE_TOKEN_POWSEEK, 
+		MESSAGE_COUNT
+	};
+	//constructor/functions
+	public enum AnonymousEnum
+	{
+		MESSAGE_DEFAULT,
+		MESSAGE_WILL_COLLIDE,
+		MESSAGE_WONT_COLLIDE,
+		MESSAGE_NO_ASTEROIDS,
+		MESSAGE_NO_POWERUPS,
+		MESSAGE_ASTEROID_FAR,
+		MESSAGE_ASTEROID_NEAR,
+		MESSAGE_POWERUP_NEAR,
+		MESSAGE_POWERUP_FAR,
+		MESSAGE_CHANGE_STATE,
+		MESSAGE_SHIP_TOTAL_STOP,
+		MESSAGE_TOKEN_PSCAN,
+		MESSAGE_TOKEN_MAXSPEED,
+		MESSAGE_TOKEN_APDIST,
+		MESSAGE_TOKEN_ATDIST,
+		MESSAGE_TOKEN_SAFERAD,
+		MESSAGE_TOKEN_POWSEEK,
+		MESSAGE_COUNT,
+		REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM,
+		REGISTER_ERROR_ALREADY_REGISTERED,
+		REGISTER_MESSAGE_OK,
+		MFSM_STATE_NONE,
+		MFSM_STATE_APPROACH,
+		MFSM_STATE_ATTACK,
+		MFSM_STATE_EVADE,
+		MFSM_STATE_GETPOWERUP,
+		MFSM_STATE_IDLE,
+	    MFSM_STATE_COUNT,
+		MFSM_MACH_NONE,
+		MFSM_MACH_MAINSHIP,
+	    MFSM_MACH_COUNT
+	}
+
+	public class MessageReg
+	{
+		public MessageReg()
+		{
+			m_objectID = -1;
+			m_parent = null;
+			m_callBack = null;
+		}
+		public int m_objectID;
+		public Object m_parent;
+		public dg_Callback m_callBack;
+	}
+	public class MessageType
+	{
+		public int m_typeID;
+		public List<MessageReg> m_messageRegistrations;
+
+		//debug data
+		public String m_name;
+	}
+}
