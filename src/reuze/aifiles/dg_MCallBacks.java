@@ -1,8 +1,9 @@
 package reuze.aifiles;
 
+import reuze.aifiles.dg_MessState.MSGStates;
+import reuze.aifiles.dg_MessState.States;
 import reuze.aifiles.dg_Message.DataMessage;
-import reuze.aifiles.dg_Messages.MSGState;
-import reuze.aifiles.dg_Messages.Types;
+import reuze.aifiles.dg_MessState;
 
 public class dg_MCallBacks {
 	public class EvadeCallback extends dg_Callback
@@ -11,7 +12,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		private void function(Object parent, RefObject<dg_Message> msg)
 		{
-			DataMessage<Integer> newMsg = new DataMessage<Integer>(Types.MESSAGE_CHANGE_STATE.getCode(),MSGState.MFSM_STATE_EVADE.getCode());
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			dg_MessagePump.SendMessage(newMsg);
 		}
@@ -22,7 +23,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		private void function(Object parent, RefObject<dg_Message> msg)
 		{
-			DataMessage<Integer> newMsg = new DataMessage<Integer>(Types.MESSAGE_CHANGE_STATE.getCode(),MSGState.MFSM_STATE_EVADE);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.getCode(),States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			;
 			dg_MessagePump.SendMessage(newMsg);
@@ -34,7 +35,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		private void function(Object parent, RefObject<dg_Message> msg)
 		{
-			DataMessage<Integer> newMsg = new DataMessage<Integer>(AnonymousEnum.MESSAGE_CHANGE_STATE,AnonymousEnum.MFSM_STATE_ATTACK);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_ATTACK);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			;
 			dg_MessagePump.Instance().SendMessage(newMsg);
@@ -46,7 +47,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		private void function(Object parent, RefObject<dg_Message> msg)
 		{
-			DataMessage<Integer> newMsg = new DataMessage<Integer>(AnonymousEnum.MESSAGE_CHANGE_STATE,AnonymousEnum.MFSM_STATE_GETPOWERUP);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_GETPOWERUP);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			;
 			dg_MessagePump.Instance().SendMessage(newMsg);
@@ -58,7 +59,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		private void function(Object parent, RefObject<Message> msg)
 		{
-			DataMessage<Integer> newMsg = new DataMessage<Integer>(AnonymousEnum.MESSAGE_CHANGE_STATE,AnonymousEnum.MFSM_STATE_IDLE);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_IDLE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			;
 			dg_MessagePump.SendMessage(newMsg);

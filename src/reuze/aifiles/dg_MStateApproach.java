@@ -1,5 +1,9 @@
 package reuze.aifiles;
 
+import java.awt.geom.Point2D;
+
+import com.software.reuze.gb_Vector3;
+
 public class dg_MStateApproach extends dg_MessState
 {
 	//constructor/functions
@@ -13,22 +17,23 @@ public class dg_MStateApproach extends dg_MessState
 	{
 		//turn and then thrust towards closest asteroid
 		MessAIControl parent = (MessAIControl)m_parent;
-		GameObj asteroid = parent.m_nearestAsteroid;
+		dg_GameObject asteroid = parent.m_nearestAsteroid;
+		dg_Ship    ship     = parent.m_ship;
+		
 		if (asteroid == null)
 			return;
 	
-		Ship ship = parent.m_ship;
-		Point3<Float> deltaPos = asteroid.m_position - ship.m_position;
-		Point3<Float> astVelNormalized = asteroid.m_velocity;
-		astVelNormalized.Normalize();
+		gb_Vector3 deltaPos = asteroid.m_position.sub(ship.m_position);
+		gb_Vector3 astVelNormalized = asteroid.m_velocity;
+		astVelNormalized.norTo(len);
 	
 		//use braking vector if you're going too fast
 		boolean needToBrake = false;
-		float speed = ship.m_velocity.Length();
+		float speed = ship.m_velocity.len();
 		if(speed > parent.m_maxSpeed)
 		{
 			needToBrake = true;
-			deltaPos = -ship.m_velocity;
+			deltaPos = -ship.m_velocity.
 		}
 		else
 		{
