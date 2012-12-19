@@ -1,6 +1,6 @@
 package reuze.aifiles.messaging;
 
-import reuze.aifiles.dg_MessagePump;
+import reuze.aifiles.messaging.dg_MessagePump;
 
 public abstract class dg_MessState
 {
@@ -27,6 +27,13 @@ public abstract class dg_MessState
 		MFSM_MACH_MAINSHIP,
 	    MFSM_MACH_COUNT
 	};
+	
+	public static enum REGState
+	{
+		REGISTER_ERROR_ALREADY_REGISTERED,
+		REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM,
+		REGISTER_MESSAGE_OK;
+	}
 	
 	public static enum MSGStates 
 	{

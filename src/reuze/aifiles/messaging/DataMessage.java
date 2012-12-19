@@ -1,19 +1,19 @@
 package reuze.aifiles.messaging;
 
-import reuze.aifiles.dg_MessState.States;
+import reuze.aifiles.messaging.dg_MessState.States;
 import reuze.aifiles.messaging.dg_MessState.MSGStates;
 
 public class DataMessage<T> extends dg_Message
 {
-	public DataMessage(MSGStates type, T data)
+	public DataMessage(MSGStates type, reuze.aifiles.messaging.dg_MessState.States mfsmStateEvade)
 	{
 		super(type);
-		m_dataStorage = data;
+		m_dataStorage = mfsmStateEvade;
 	}
 	public void Dispose()
 	{
 	}
 
 	//data member
-	public T m_dataStorage;
+	public reuze.aifiles.messaging.dg_MessState.States m_dataStorage;
 }

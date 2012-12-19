@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import reuze.aifiles.messaging.dg_MessState.REGState;
 import reuze.aifiles.messaging.dg_Message;
 import reuze.aifiles.messaging.DataMessage;
 import reuze.aifiles.messaging.dg_Messages;
@@ -17,6 +19,11 @@ public class dg_MessagePump {
 	//public static Queue messageQueue = new LinkedBlockingQueue<>();
 	//public static List messageList = new ArrayList<dg_Message>();
 	//public static Map messageTypeMap = new HashMap<Integer,MessageType>();
+	private static dg_MessagePump inst;
+	public static dg_MessagePump Instance()
+	{
+		return inst;
+	}
 	
 	public static HashMap<Integer,dg_MessageType> m_messageTypes;
 	public static List<dg_Message> m_messageQueue = new ArrayList<dg_Message>();
@@ -57,10 +64,9 @@ public class dg_MessagePump {
 			return;
 	
 		//process messages
-		Iterator<dg_Message> msgItr = m_messageQueue.iterator();
-		for(msg =m_messageQueue.begin();msg!=m_messageQueue.end();++msg)
-		{
-			dg_Message pMsg = msgItr.next();
+		//Iterator<dg_Message> msgItr = m_messageQueue.iterator();
+		for(dg_Message pMsg : m_messageQueue)
+		{			
 			if(pMsg.m_timer >= 0)
 			{
 				//delayed message, decrement timer
@@ -73,18 +79,20 @@ public class dg_MessagePump {
 				//std.map.iterator geType*>iterator mType;
 				//mType = m_messageTypes.find(pMsg.m_typeID);
 				dg_MessageType mType = m_messageTypes.get(pMsg.m_typeID);
+				//dg_MessageType pmType = mType.getNext();
+				//dg_MessageType mType = m_messageTypes.get(pMsg.m_typeID);
 				if(mType == null)
 					continue;
-				dg_MessageType pmType = mType.second;
-	
-				std.list.iterator g*>iterator msgReg;
-				std.list<MessageReg*> pMessReg = mType.second.m_messageRegistrations;
-				for(msgReg =mType.second.m_messageRegistrations.begin();msgReg!=mType.second.m_messageRegistrations.end();++msgReg)
+				//dg_MessageType pmType = ;
+				
+				//Iterator<MessageReg> msgReg = mType.m_messageRegistrations.iterator();
+				
+				for(dg_MessageReg msg : mType.m_messageRegistrations)
 				{
-					MessageReg pmReg = (*msgReg);
+					dg_MessageReg pmReg = msg;
 					//deliver message by launching callback
-					if(pmReg.m_callBack)
-						pmReg.m_callBack.function(pmReg.m_parent,pMsg);
+					if(msg.m_callBack != null)
+						msg.m_callBack.function(pmReg.m_parent,pMsg);
 				}
 				pMsg.m_delivered = true;
 			}
@@ -116,29 +124,29 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public static int RegisterForMessage(int type, Object parent, int objectID, RefObject<dg_Callback> cBack)
+	public static REGState RegisterForMessage(int type, Object parent, int objectID, dg_Callback cBack)
 	{
 		//only register once
+		//dg_MessageType mType = m_messageTypes.get(type);
+		//dg_MessageType pmtype = mType.second;
 		dg_MessageType mType = m_messageTypes.get(type);
-		dg_MessageType pmtype = mType.second;
+		
+		if(mType == null)
+			return REGState.REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM;
 	
-		if(mType == m_messageTypes.end())
-			return AnonymousEnum.REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM;
-	
-		std.list.iterator g*>iterator msgReg;
-		for(msgReg =mType.second.m_messageRegistrations.begin();msgReg!=mType.second.m_messageRegistrations.end();++msgReg)
+		for(dg_MessageReg msgReg : mType.m_messageRegistrations)
 		{
-			if((*msgReg).m_objectID == objectID)
-				return AnonymousEnum.REGISTER_ERROR_ALREADY_REGISTERED;
+			if(msgReg.m_objectID == objectID)
+				return REGState.REGISTER_ERROR_ALREADY_REGISTERED;
 		}
 		//add new registration
-		MessageReg newRegistration = new dg_MessageReg();
+		dg_MessageReg newRegistration = new dg_MessageReg();
 		newRegistration.m_parent = parent;
-		newRegistration.m_callBack = cBack.argvalue;
+		newRegistration.m_callBack = cBack;
 		newRegistration.m_objectID = objectID;
 	
-		mType.second.m_messageRegistrations.push_back(newRegistration);
-		return AnonymousEnum.REGISTER_MESSAGE_OK;
+		mType.m_messageRegistrations.add(newRegistration);
+		return REGState.REGISTER_MESSAGE_OK;
 	
 	
 	}
@@ -147,50 +155,47 @@ public class dg_MessagePump {
 	public static void UnRegisterForMessage(int type, int objectID)
 	{
 		//find entry
-		std.map.iterator geType*>iterator mType;
-		mType = m_messageTypes.find(type);
+		dg_MessageType mType = m_messageTypes.get(type);
 	
-		if(mType == m_messageTypes.end())
+		if(mType == null)
 			return;
 	
-		std.list.iterator g*>iterator msgReg;
-		for(msgReg =mType.second.m_messageRegistrations.begin();msgReg!=mType.second.m_messageRegistrations.end();)
+		for(dg_MessageReg msgReg : mType.m_messageRegistrations)
 		{
-			if((*msgReg).m_objectID == objectID)
+			if(msgReg.m_objectID == objectID)
 			{
-				mType.second.m_messageRegistrations.erase(msgReg);
+				mType.m_messageRegistrations.remove(msgReg);
 				//you can exit out here, there is only one registration 
 				//allowed per message type
 				return;
 			}
-			else
-				msgReg++;
+			else {
+				continue;
+			}
 		}
 	}
 
 	//---------------------------------------------------------
 	public static void UnRegisterAll(int objectID)
 	{
-		std.map.iterator geType*>iterator mType;
-		for(mType = m_messageTypes.begin();mType != m_messageTypes.end(); ++mType)
+		for(dg_MessageType mType : m_messageTypes.values())
 		{
-			Iterator msgRegItr = msgReg.iterator();
-			for(msgReg =mType.second.m_messageRegistrations.begin();msgReg!=mType.second.m_messageRegistrations.end();)
+			for(dg_MessageReg msgReg : mType.m_messageRegistrations)
 			{
-				if((*msgReg).m_objectID == objectID)
+				if(msgReg.m_objectID == objectID)
 				{
-					mType.second.m_messageRegistrations.erase(msgReg);
+					mType.m_messageRegistrations.remove(msgReg);
 					//you can exit out here, there is only one registration 
 					//allowed per message type
 					return;
 				}
 				else
-					msgReg++;
+					continue;
 			}
 		}
 	}
 	//---------------------------------------------------------
-	public static void SendMessage(DataMessage<Integer> newMsg)
+	public static void SendMessage(DataMessage<dg_MessState> newMsg)
 	{
 		m_messageIncomingQueue.add(newMsg);
 	}

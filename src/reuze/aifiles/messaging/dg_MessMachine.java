@@ -2,10 +2,10 @@ package reuze.aifiles.messaging;
 
 import java.util.ArrayList;
 
-import reuze.aifiles.dg_MessagePump;
-import reuze.aifiles.dg_FSMState.States;
-import reuze.aifiles.dg_MessState.MSGStates;
-import reuze.aifiles.dg_MessState.Types;
+import reuze.aifiles.messaging.dg_MessagePump;
+import reuze.aifiles.messaging.dg_MessState.States;
+import reuze.aifiles.messaging.dg_MessState.MSGStates;
+import reuze.aifiles.messaging.dg_MessState.Types;
 
 public class dg_MessMachine extends dg_MessState
 {

@@ -3,7 +3,7 @@ package reuze.aifiles.messaging;
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_MathUtils;
 
-import reuze.aifiles.dg_MessState.States;
+import reuze.aifiles.messaging.dg_MessState.States;
 
 public class dg_MStateEvade extends dg_MessState {
 	//constructor/functions

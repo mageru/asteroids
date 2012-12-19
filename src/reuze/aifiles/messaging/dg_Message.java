@@ -8,7 +8,7 @@ public class dg_Message {
 	int m_fromID;
 	private int m_toID;
 	public float m_timer;
-	private boolean m_delivered;
+	boolean m_delivered;
 	
 	
 	public dg_Message() {
