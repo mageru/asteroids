@@ -115,8 +115,26 @@ public class dg_ControlAIMess extends dg_ControlAI {
 			        
 			        //if you're too close, and I'm heading somewhat towards you,
 			        //flag a collision
-			        if(m_nearestAsteroidDist <= adjSafetyRadius && speed > 0)
+			        if(m_nearestAsteroidDist <= adjSafetyRadius && speed > 0) {
 			            m_willCollide = true;
+			            dg_Message msg = new dg_Message(MSGStates.MESSAGE_WILL_COLLIDE);
+			            dg_MessagePump.Instance().SendMessage(msg);
+			        } else {
+			        	dg_Message msg = new dg_Message(MSGStates.MESSAGE_WONT_COLLIDE);
+			            dg_MessagePump.Instance().SendMessage(msg);
+			        }
+			        
+			        if(m_nearestAsteroidDist > 180.0f) {
+			        	dg_Message msg = new dg_Message(MSGStates.MESSAGE_ASTEROID_FAR);
+			            dg_MessagePump.Instance().SendMessage(msg);
+			        } else if (m_nearestAsteroidDist < (180.0f/2)) {
+			        	dg_Message msg = new dg_Message(MSGStates.MESSAGE_ASTEROID_NEAR);
+			            dg_MessagePump.Instance().SendMessage(msg);
+			        }
+			    }
+			    else {
+		        	dg_Message msg = new dg_Message(MSGStates.MESSAGE_NO_ASTEROIDS);
+		            dg_MessagePump.Instance().SendMessage(msg);
 			    }
 
 			    //powerup near determination
@@ -127,7 +145,12 @@ public class dg_ControlAIMess extends dg_ControlAI {
 			        if(m_nearestPowerupDist <= POWERUP_SCAN_DIST)
 			        {
 			            m_powerupNear     = true;
+			            dg_Message msg = new dg_Message(MSGStates.MESSAGE_POWERUP_NEAR);
+			            dg_MessagePump.Instance().SendMessage(msg);
 			        }
+			    } else {
+			    	dg_Message msg = new dg_Message(MSGStates.MESSAGE_NO_POWERUPS);
+		            dg_MessagePump.Instance().SendMessage(msg);
 			    }
 			    
 			}

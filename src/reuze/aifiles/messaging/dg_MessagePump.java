@@ -196,9 +196,9 @@ public class dg_MessagePump {
 		}
 	}
 	//---------------------------------------------------------
-	public void SendMessage(DataMessage<dg_MessState> newMsg)
+	public void SendMessage(dg_Message msg)
 	{
-		m_messageIncomingQueue.add(newMsg);
+		m_messageIncomingQueue.add(msg);
 	}
 
 	//---------------------------------------------------------
