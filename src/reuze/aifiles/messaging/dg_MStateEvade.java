@@ -3,9 +3,11 @@ package reuze.aifiles.messaging;
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_MathUtils;
 
+import reuze.aifiles.messaging.dg_MCallBacks.IdleCallback;
 import reuze.aifiles.messaging.dg_MessState.States;
 
 public class dg_MStateEvade extends dg_MessState {
+	public IdleCallback m_idleCallback;
 	//constructor/functions
     public dg_MStateEvade(dg_Control parent) {
     	super(States.MFSM_STATE_EVADE,parent);
@@ -70,18 +72,18 @@ public class dg_MStateEvade extends dg_MessState {
 	//---------------------------------------------------------
 	public void Exit()
 	{
-		/**
-		MessagePump.Instance().UnRegisterForMessage(AnonymousEnum.MESSAGE_WONT_COLLIDE,GetMessageID());
+		
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WONT_COLLIDE,GetMessageID());
 		
 		//send out messages to stop the ship
-		Message newMsg = new Message(AnonymousEnum.MESSAGE_SHIP_TOTAL_STOP);
+		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP);
 		newMsg.m_fromID = GetMessageID();
-		MessagePump.Instance().SendMessage(newMsg);
-		**/
+		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
+		
 	}
 	@Override
 	void Enter() {
-		//MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WONT_COLLIDE,this,GetMessageID(),m_idleCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WONT_COLLIDE,this,GetMessageID(),m_idleCallback);
 
 	}
 

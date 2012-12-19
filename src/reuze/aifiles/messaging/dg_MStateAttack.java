@@ -59,45 +59,26 @@ public class dg_MStateAttack extends dg_MessState {
 	}
 
 	//---------------------------------------------------------
-	States CheckTransitions()
-	{
-		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
-	    if(parent.m_willCollide)
-	        return States.MFSM_STATE_EVADE;
-
-	    if(parent.m_powerupNear && parent.m_nearestAsteroidDist > 
-	       parent.m_nearestPowerupDist && parent.m_ship.GetShotLevel() < z_app.game.MAX_SHOT_LEVEL)
-	        return States.MFSM_STATE_GETPOWERUP;
-	    
-	    if(parent.m_nearestAsteroid==null || parent.m_nearestAsteroidDist > z_app.game.APPROACH_DIST)
-	        return States.MFSM_STATE_IDLE;
-
-	    return States.MFSM_STATE_ATTACK;    
-	}
 
 	@Override
 	public void Exit()
-	{
-		/**
+	{		
 		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,GetMessageID());
 		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,GetMessageID());
 		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_NO_ASTEROIDS,GetMessageID());
 		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_ASTEROID_FAR,GetMessageID());
 	
 		//send out messages to stop the ship
-		Message newMsg = new Message(AnonymousEnum.MESSAGE_SHIP_TOTAL_STOP);
+		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP);
 		newMsg.m_fromID = GetMessageID();
-		MessagePump.Instance().SendMessage(newMsg);
-		**/
+		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
 	}
 	@Override
-	void Enter() {
-		/**
+	void Enter() {		
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,this,GetMessageID(),m_evadeCallback);
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,this,GetMessageID(),m_getPowerupCallback);
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_NO_ASTEROIDS,this,GetMessageID(),m_idleCallback);
-		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_ASTEROID_FAR,this,GetMessageID(),m_approachCallback);
-		 **/
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_ASTEROID_FAR,this,GetMessageID(),m_approachCallback);		
 	}
 
 	@Override

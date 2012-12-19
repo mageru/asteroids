@@ -1,8 +1,17 @@
 package reuze.aifiles.messaging;
 
+import reuze.aifiles.messaging.dg_MCallBacks.ApproachCallback;
+import reuze.aifiles.messaging.dg_MCallBacks.AttackCallback;
+import reuze.aifiles.messaging.dg_MCallBacks.EvadeCallback;
+import reuze.aifiles.messaging.dg_MCallBacks.GetPowerupCallback;
 import reuze.aifiles.messaging.dg_MessState.States;
 
 public class dg_MStateIdle extends dg_MessState {
+	public EvadeCallback m_evadeCallback;
+	public ApproachCallback m_approachCallback;
+	public AttackCallback m_attackCallback;
+	public GetPowerupCallback m_getPowerupCallback;
+	
 	public dg_MStateIdle(dg_Control parent) {
 		super(States.MFSM_STATE_IDLE, parent);
 	}
@@ -37,12 +46,18 @@ public class dg_MStateIdle extends dg_MessState {
 	}
 	@Override
 	void Enter() {
-		// TODO Auto-generated method stub
-		
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,this,GetMessageID(),m_evadeCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_ASTEROID_FAR,this,GetMessageID(),m_approachCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_ASTEROID_NEAR,this,GetMessageID(),m_attackCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,this,GetMessageID(),m_getPowerupCallback);
+
 	}
 	@Override
 	void Exit() {
-		// TODO Auto-generated method stub
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_ASTEROID_FAR,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_ASTEROID_NEAR,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,GetMessageID());
 		
 	}
 	@Override

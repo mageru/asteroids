@@ -1,10 +1,16 @@
 package reuze.aifiles.messaging;
 
+import reuze.aifiles.messaging.dg_MCallBacks.EvadeCallback;
+import reuze.aifiles.messaging.dg_MCallBacks.IdleCallback;
+
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_MathUtils;
 
 
 public class dg_MStateGetPowerup extends dg_MessState {
+	//callbacks for handling messages
+	public EvadeCallback m_evadeCallback;
+	public IdleCallback m_idleCallback;
 	//constructor/functions
     public dg_MStateGetPowerup(dg_Control parent) {
     	super(States.MFSM_STATE_GETPOWERUP,parent);
@@ -70,32 +76,24 @@ public class dg_MStateGetPowerup extends dg_MessState {
 	}
 
 	//---------------------------------------------------------
-	States CheckTransitions()
-	{
-		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
-
-	    if(parent.m_willCollide)
-	        return States.MFSM_STATE_EVADE;
-
-	    if(parent.m_nearestPowerup==null || parent.m_nearestAsteroidDist < parent.m_nearestPowerupDist)
-	        return States.MFSM_STATE_IDLE;
-
-	    return States.MFSM_STATE_GETPOWERUP;    
-	}
 
 	//---------------------------------------------------------
 	void Exit()
 	{
-	    if(((dg_ControlAIMess)m_parent).m_ship!=null)
-	    {
-	        ((dg_ControlAIMess)m_parent).m_ship.ThrustOff();
-	        ((dg_ControlAIMess)m_parent).m_ship.StopTurn();
-	    }
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_ASTEROID_NEAR,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_NO_POWERUPS,GetMessageID());
+	
+		//send out messages to stop the ship
+		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP);
+		newMsg.m_fromID = GetMessageID();
+		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
 	}
 	@Override
 	void Enter() {
-		// TODO Auto-generated method stub
-
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,this,GetMessageID(),m_evadeCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_ASTEROID_NEAR,this,GetMessageID(),m_idleCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_NO_POWERUPS,this,GetMessageID(),m_idleCallback);
 	}
 
 	@Override

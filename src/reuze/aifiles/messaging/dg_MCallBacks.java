@@ -13,7 +13,7 @@ public class dg_MCallBacks {
 		{
 			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
-			dg_MessagePump.SendMessage(newMsg);
+			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
 	public class ApproachCallback extends dg_Callback
@@ -25,7 +25,7 @@ public class dg_MCallBacks {
 			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
-			dg_MessagePump.SendMessage(newMsg);
+			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
 	public class AttackCallback extends dg_Callback
@@ -36,8 +36,8 @@ public class dg_MCallBacks {
 		{
 			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_ATTACK);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
-			;
-			dg_MessagePump.SendMessage(newMsg);
+			
+			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
 	public class GetPowerupCallback extends dg_Callback
@@ -48,8 +48,8 @@ public class dg_MCallBacks {
 		{
 			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_GETPOWERUP);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
-			;
-			dg_MessagePump.SendMessage(newMsg);
+			
+			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
 	public class IdleCallback extends dg_Callback
@@ -60,8 +60,8 @@ public class dg_MCallBacks {
 		{
 			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_IDLE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
-			;
-			dg_MessagePump.SendMessage(newMsg);
+			
+			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
 

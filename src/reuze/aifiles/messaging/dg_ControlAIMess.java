@@ -1,5 +1,7 @@
 package reuze.aifiles.messaging;
 
+import reuze.aifiles.messaging.dg_MessState.MSGStates;
+
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_InterpolateLerp;
 
@@ -21,6 +23,16 @@ public class dg_ControlAIMess extends dg_ControlAI {
 		dg_MessMachine m_machine;
 		public dg_ControlAIMess(dg_Ship ship) {
 			super(ship);
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_WONT_COLLIDE.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_WILL_COLLIDE.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_NO_ASTEROIDS.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_NO_POWERUPS.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_ASTEROID_NEAR.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_ASTEROID_FAR.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_POWERUP_NEAR.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_POWERUP_FAR.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_SHIP_TOTAL_STOP.ordinal());
+			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_CHANGE_STATE.ordinal());
 			    //construct the state machine and add the necessary states
 			    m_machine = new dg_MessMachine(dg_MessState.Types.MFSM_MACH_MAINSHIP,this);
 			    dg_MStateApproach approach = new dg_MStateApproach(this);

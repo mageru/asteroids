@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import reuze.aifiles.messaging.dg_MessState.MSGStates;
 import reuze.aifiles.messaging.dg_MessState.REGState;
 import reuze.aifiles.messaging.dg_Message;
 import reuze.aifiles.messaging.DataMessage;
@@ -107,29 +108,29 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public static void AddMessageToSystem(int type)
+	public void AddMessageToSystem(int messageWontCollide)
 	{
 		//ensure that this type isn't already in the system
 
-		dg_MessageType mType = m_messageTypes.get(type);
+		dg_MessageType mType = m_messageTypes.get(messageWontCollide);
 	
 		if(mType == null)
 		{
 			dg_MessageType newType = new dg_MessageType();
-			newType.m_typeID = type;
-			m_messageTypes.put(type, newType);
+			newType.m_typeID = messageWontCollide;
+			m_messageTypes.put(messageWontCollide, newType);
 			newType.m_name = new String();
-			newType.m_name = GetMessageName(type);
+			//newType.m_name = GetMessageName(messageWontCollide);
 		}
 	}
 
 	//---------------------------------------------------------
-	public static REGState RegisterForMessage(int type, Object parent, int objectID, dg_Callback cBack)
+	public REGState RegisterForMessage(MSGStates messageWillCollide, Object parent, int objectID, dg_Callback cBack)
 	{
 		//only register once
 		//dg_MessageType mType = m_messageTypes.get(type);
 		//dg_MessageType pmtype = mType.second;
-		dg_MessageType mType = m_messageTypes.get(type);
+		dg_MessageType mType = m_messageTypes.get(messageWillCollide);
 		
 		if(mType == null)
 			return REGState.REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM;
@@ -152,10 +153,10 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public static void UnRegisterForMessage(int type, int objectID)
+	public void UnRegisterForMessage(MSGStates messageAsteroidNear, int objectID)
 	{
 		//find entry
-		dg_MessageType mType = m_messageTypes.get(type);
+		dg_MessageType mType = m_messageTypes.get(messageAsteroidNear);
 	
 		if(mType == null)
 			return;
@@ -195,7 +196,7 @@ public class dg_MessagePump {
 		}
 	}
 	//---------------------------------------------------------
-	public static void SendMessage(DataMessage<dg_MessState> newMsg)
+	public void SendMessage(DataMessage<dg_MessState> newMsg)
 	{
 		m_messageIncomingQueue.add(newMsg);
 	}
