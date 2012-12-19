@@ -25,8 +25,12 @@ public class dg_MessagePump {
 	{
 		return inst;
 	}
+	public static void setInstance(dg_MessagePump pump)
+	{
+		inst = new dg_MessagePump();
+	}
 	
-	public static HashMap<Integer,dg_MessageType> m_messageTypes;
+	public static HashMap<Integer,dg_MessageType> m_messageTypes = new HashMap<Integer, dg_MessageType>();
 	public static List<dg_Message> m_messageQueue = new ArrayList<dg_Message>();
 	public static List<dg_Message> m_messageIncomingQueue = new ArrayList<dg_Message>();
 	
@@ -112,8 +116,17 @@ public class dg_MessagePump {
 	{
 		//ensure that this type isn't already in the system
 
+		try {
 		dg_MessageType mType = m_messageTypes.get(messageWontCollide);
-	
+		}
+		catch(NullPointerException ex) {
+			dg_MessageType newType = new dg_MessageType();
+			newType.m_typeID = messageWontCollide;
+			newType.m_name = GetMessageName(messageWontCollide);
+			m_messageTypes.put(messageWontCollide, newType);
+			//continue;
+		}
+		/**
 		if(mType == null)
 		{
 			dg_MessageType newType = new dg_MessageType();
@@ -122,6 +135,7 @@ public class dg_MessagePump {
 			newType.m_name = new String();
 			//newType.m_name = GetMessageName(messageWontCollide);
 		}
+		**/
 	}
 
 	//---------------------------------------------------------

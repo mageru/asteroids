@@ -23,6 +23,8 @@ public class dg_ControlAIMess extends dg_ControlAI {
 		dg_MessMachine m_machine;
 		public dg_ControlAIMess(dg_Ship ship) {
 			super(ship);
+			dg_MessagePump thePump = new dg_MessagePump();
+			dg_MessagePump.setInstance(thePump);
 			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_WONT_COLLIDE.ordinal());
 			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_WILL_COLLIDE.ordinal());
 			dg_MessagePump.Instance().AddMessageToSystem(MSGStates.MESSAGE_NO_ASTEROIDS.ordinal());
