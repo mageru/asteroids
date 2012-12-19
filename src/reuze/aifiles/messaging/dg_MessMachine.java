@@ -1,4 +1,4 @@
-package reuze.aifiles;
+package reuze.aifiles.messaging;
 
 import java.util.ArrayList;
 

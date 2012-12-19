@@ -1,4 +1,4 @@
-package reuze.aifiles;
+package reuze.aifiles.messaging;
 
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_InterpolateLerp;
