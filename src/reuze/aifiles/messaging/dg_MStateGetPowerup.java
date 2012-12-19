@@ -3,16 +3,15 @@ package reuze.aifiles.messaging;
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_MathUtils;
 
-import reuze.aifiles.dg_FSMState.States;
 
-public class dg_StateGetPowerup extends dg_FSMState {
+public class dg_MStateGetPowerup extends dg_MessState {
 	//constructor/functions
-    public dg_StateGetPowerup(dg_Control parent) {
-    	super(States.FSM_STATE_GETPOWERUP,parent);
+    public dg_MStateGetPowerup(dg_Control parent) {
+    	super(States.MFSM_STATE_GETPOWERUP,parent);
     }
 	public void Update(float dt)
 	{
-		dg_ControlAIFSM parent = (dg_ControlAIFSM)m_parent;
+		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
 	    dg_GameObject powerup = parent.m_nearestPowerup;
 	    dg_Ship    ship     = parent.m_ship;
 
@@ -73,24 +72,24 @@ public class dg_StateGetPowerup extends dg_FSMState {
 	//---------------------------------------------------------
 	States CheckTransitions()
 	{
-		dg_ControlAIFSM parent = (dg_ControlAIFSM)m_parent;
+		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
 
 	    if(parent.m_willCollide)
-	        return States.FSM_STATE_EVADE;
+	        return States.MFSM_STATE_EVADE;
 
 	    if(parent.m_nearestPowerup==null || parent.m_nearestAsteroidDist < parent.m_nearestPowerupDist)
-	        return States.FSM_STATE_IDLE;
+	        return States.MFSM_STATE_IDLE;
 
-	    return States.FSM_STATE_GETPOWERUP;    
+	    return States.MFSM_STATE_GETPOWERUP;    
 	}
 
 	//---------------------------------------------------------
 	void Exit()
 	{
-	    if(((dg_ControlAIFSM)m_parent).m_ship!=null)
+	    if(((dg_ControlAIMess)m_parent).m_ship!=null)
 	    {
-	        ((dg_ControlAIFSM)m_parent).m_ship.ThrustOff();
-	        ((dg_ControlAIFSM)m_parent).m_ship.StopTurn();
+	        ((dg_ControlAIMess)m_parent).m_ship.ThrustOff();
+	        ((dg_ControlAIMess)m_parent).m_ship.StopTurn();
 	    }
 	}
 	@Override

@@ -1,13 +1,14 @@
 package reuze.aifiles.messaging;
 
-import reuze.aifiles.dg_Message.DataMessage;
+import reuze.aifiles.messaging.dg_MessState.States;
+import reuze.aifiles.messaging.DataMessage;
 
 public class dg_ChangeStateCallback extends dg_Callback{
 
 	//---------------------------------------------------------
-	private void function(Object parent, RefObject<dg_Message> msg)
+	private void function(Object parent, dg_Message msg)
 	{
-		int newState = ((DataMessage<Integer>)msg.argvalue).m_dataStorage;
+		reuze.aifiles.messaging.dg_MessState.States newState = ((DataMessage<States>)msg).m_dataStorage;
 		((dg_MessMachine)parent).SetGoalID(newState);
 	}
 }

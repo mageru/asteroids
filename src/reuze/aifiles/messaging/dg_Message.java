@@ -12,7 +12,7 @@ public class dg_Message {
 	
 	
 	public dg_Message() {
-		this.setM_typeID(-1);
+		this(MSGStates.MESSAGE_DEFAULT);
 	}
 	
 	public dg_Message(MSGStates messageShipTotalStop) {
@@ -21,34 +21,21 @@ public class dg_Message {
 		this.setM_timer(0.0f);
 	}
 
-	public class DataMessage<T> extends dg_Message
-	{
-		public DataMessage(int type, T data)
-		{
-			super(type);
-			m_dataStorage = data;
-		}
-		public void Dispose()
-		{
-		}
-
-		//data member
-		public T m_dataStorage;
-	}
+	
 	
 	/**
 	 * @return the m_typeID
 	 */
-	public int getM_typeID() {
+	public MSGStates getM_typeID() {
 		return m_typeID;
 	}
 
 
 	/**
-	 * @param i the m_typeID to set
+	 * @param messageShipTotalStop the m_typeID to set
 	 */
-	public void setM_typeID(int i) {
-		this.m_typeID = i;
+	public void setM_typeID(MSGStates messageShipTotalStop) {
+		this.m_typeID = messageShipTotalStop;
 	}
 
 

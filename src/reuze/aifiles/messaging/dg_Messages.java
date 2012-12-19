@@ -1,7 +1,8 @@
 package reuze.aifiles.messaging;
 
 import java.util.List;
-import reuze.aifiles.dg_Callback;
+import reuze.aifiles.messaging.dg_Callback;
+import reuze.aifiles.messaging.dg_MessState.MSGStates;
 
 public abstract class dg_Messages {
 	public class MessageReg
@@ -18,7 +19,7 @@ public abstract class dg_Messages {
 	}
 	public class MessageType
 	{
-		public int m_typeID;
+		public MSGStates m_typeID;
 		public List<MessageReg> m_messageRegistrations;
 
 		//debug data

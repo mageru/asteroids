@@ -26,9 +26,9 @@ public class dg_ControlAIMess extends dg_ControlAI {
 			    dg_MStateApproach approach = new dg_MStateApproach(this);
 			    m_machine.AddState(approach);
 			    m_machine.AddState(new dg_MStateAttack(this));
-			    m_machine.AddState(new dg_StateEvade(this));
-			    m_machine.AddState(new dg_StateGetPowerup(this));
-			    dg_StateIdle idle = new dg_StateIdle(this);
+			    m_machine.AddState(new dg_MStateEvade(this));
+			    m_machine.AddState(new dg_MStateGetPowerup(this));
+			    dg_MStateIdle idle = new dg_MStateIdle(this);
 			    m_machine.AddState(idle);
 			    //m_machine.SetDefaultState(idle);
 			    m_machine.SetDefaultState(approach);

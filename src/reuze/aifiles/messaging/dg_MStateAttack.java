@@ -3,11 +3,11 @@ package reuze.aifiles.messaging;
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_MathUtils;
 
-import reuze.aifiles.dg_FSMState.States;
-import reuze.aifiles.dg_MCallBacks.AttackCallback;
-import reuze.aifiles.dg_MCallBacks.EvadeCallback;
-import reuze.aifiles.dg_MCallBacks.GetPowerupCallback;
-import reuze.aifiles.dg_MCallBacks.IdleCallback;
+import reuze.aifiles.messaging.dg_MessState.States;
+import reuze.aifiles.messaging.dg_MCallBacks.AttackCallback;
+import reuze.aifiles.messaging.dg_MCallBacks.EvadeCallback;
+import reuze.aifiles.messaging.dg_MCallBacks.GetPowerupCallback;
+import reuze.aifiles.messaging.dg_MCallBacks.IdleCallback;
 import reuze.aifiles.messaging.dg_MCallBacks.ApproachCallback;
 
 public class dg_MStateAttack extends dg_MessState {
@@ -78,6 +78,7 @@ public class dg_MStateAttack extends dg_MessState {
 	@Override
 	public void Exit()
 	{
+		/**
 		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,GetMessageID());
 		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,GetMessageID());
 		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_NO_ASTEROIDS,GetMessageID());
@@ -87,14 +88,16 @@ public class dg_MStateAttack extends dg_MessState {
 		Message newMsg = new Message(AnonymousEnum.MESSAGE_SHIP_TOTAL_STOP);
 		newMsg.m_fromID = GetMessageID();
 		MessagePump.Instance().SendMessage(newMsg);
+		**/
 	}
 	@Override
 	void Enter() {
+		/**
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,this,GetMessageID(),m_evadeCallback);
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,this,GetMessageID(),m_getPowerupCallback);
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_NO_ASTEROIDS,this,GetMessageID(),m_idleCallback);
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_ASTEROID_FAR,this,GetMessageID(),m_approachCallback);
-
+		 **/
 	}
 
 	@Override

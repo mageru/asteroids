@@ -8,12 +8,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
-import reuze.aifiles.dg_Message;
-import reuze.aifiles.dg_Message.DataMessage;
-import reuze.aifiles.dg_Messages;
-import reuze.aifiles.dg_MessageType;
-import reuze.aifiles.dg_Messages.AnonymousEnum;
-import reuze.aifiles.dg_Messages.Types;
+import reuze.aifiles.messaging.dg_Message;
+import reuze.aifiles.messaging.DataMessage;
+import reuze.aifiles.messaging.dg_Messages;
+import reuze.aifiles.messaging.dg_MessageType;
 
 public class dg_MessagePump {
 	//public static Queue messageQueue = new LinkedBlockingQueue<>();
@@ -25,7 +23,7 @@ public class dg_MessagePump {
 	public static List<dg_Message> m_messageIncomingQueue = new ArrayList<dg_Message>();
 	
 	
-	public class MessageReciever {
+	public static class MessageReciever {
 		public int m_ID;
 		public MessageReciever() {
 			this.m_ID = dg_MessagePump.GetUniqueMessageID();

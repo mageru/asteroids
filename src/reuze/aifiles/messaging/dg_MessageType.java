@@ -2,7 +2,7 @@ package reuze.aifiles.messaging;
 
 import java.util.List;
 
-import reuze.aifiles.dg_Messages.MessageReg;
+import reuze.aifiles.messaging.dg_Messages.MessageReg;
 
 public class dg_MessageType {
 		public int m_typeID;
