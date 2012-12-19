@@ -14,6 +14,7 @@ import reuze.aifiles.dg_Messages;
 import reuze.aifiles.dg_MessageType;
 import reuze.aifiles.dg_Messages.AnonymousEnum;
 import reuze.aifiles.dg_Messages.Types;
+import reuze.aifiles.messaging.dg_MessState.MSGStates;
 
 public class dg_MessagePump {
 	//public static Queue messageQueue = new LinkedBlockingQueue<>();
@@ -79,7 +80,7 @@ public class dg_MessagePump {
 					continue;
 				dg_MessageType pmType = mType.second;
 	
-				std.list.iterator g*>iterator msgReg;
+				Iterator msgReg;
 				std.list<MessageReg*> pMessReg = mType.second.m_messageRegistrations;
 				for(msgReg =mType.second.m_messageRegistrations.begin();msgReg!=mType.second.m_messageRegistrations.end();++msgReg)
 				{
@@ -146,7 +147,7 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public static void UnRegisterForMessage(int type, int objectID)
+	public static void UnRegisterForMessage(MSGStates type, int objectID)
 	{
 		//find entry
 		std.map.iterator geType*>iterator mType;

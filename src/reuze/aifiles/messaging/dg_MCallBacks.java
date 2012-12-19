@@ -10,7 +10,7 @@ public class dg_MCallBacks {
 	{
 
 		//---------------------------------------------------------
-		private void function(Object parent, RefObject<dg_Message> msg)
+		private void function(Object parent, dg_Message msg)
 		{
 			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
@@ -21,11 +21,11 @@ public class dg_MCallBacks {
 	{
 
 		//---------------------------------------------------------
-		private void function(Object parent, RefObject<dg_Message> msg)
+		private void function(Object parent, dg_Message msg)
 		{
-			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.getCode(),States.MFSM_STATE_EVADE);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
-			;
+			
 			dg_MessagePump.SendMessage(newMsg);
 		}
 	}
@@ -33,7 +33,7 @@ public class dg_MCallBacks {
 	{
 
 		//---------------------------------------------------------
-		private void function(Object parent, RefObject<dg_Message> msg)
+		private void function(Object parent, dg_Message msg)
 		{
 			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_ATTACK);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
@@ -45,7 +45,7 @@ public class dg_MCallBacks {
 	{
 
 		//---------------------------------------------------------
-		private void function(Object parent, RefObject<dg_Message> msg)
+		private void function(Object parent, dg_Message msg)
 		{
 			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_GETPOWERUP);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
@@ -57,7 +57,7 @@ public class dg_MCallBacks {
 	{
 
 		//---------------------------------------------------------
-		private void function(Object parent, RefObject<Message> msg)
+		private void function(Object parent, dg_Message msg)
 		{
 			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_IDLE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();

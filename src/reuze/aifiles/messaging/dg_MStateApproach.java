@@ -2,15 +2,20 @@ package reuze.aifiles.messaging;
 
 import java.awt.geom.Point2D;
 
+import reuze.aifiles.dg_MCallBacks.AttackCallback;
+import reuze.aifiles.dg_MCallBacks.EvadeCallback;
+import reuze.aifiles.dg_MCallBacks.GetPowerupCallback;
+import reuze.aifiles.dg_MCallBacks.IdleCallback;
+
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_MathUtils;
 
 public class dg_MStateApproach extends dg_MessState
 {
 	//constructor/functions
-	public dg_MStateApproach(RefObject<dg_Control> parent)
+	public dg_MStateApproach(dg_Control parent)
 	{
-		super(States.MFSM_STATE_APPROACH,parent.argvalue);
+		super(States.MFSM_STATE_APPROACH,parent);
 	}
 
 	//---------------------------------------------------------
@@ -87,26 +92,30 @@ public class dg_MStateApproach extends dg_MessState
 	//---------------------------------------------------------
 	public void Enter()
 	{
-		MessagePump.Instance().RegisterForMessage(AnonymousEnum.MESSAGE_WILL_COLLIDE,this,GetMessageID(),m_evadeCallback);
-		MessagePump.Instance().RegisterForMessage(AnonymousEnum.MESSAGE_POWERUP_NEAR,this,GetMessageID(),m_getPowerupCallback);
-		MessagePump.Instance().RegisterForMessage(AnonymousEnum.MESSAGE_NO_ASTEROIDS,this,GetMessageID(),m_idleCallback);
-		MessagePump.Instance().RegisterForMessage(AnonymousEnum.MESSAGE_ASTEROID_NEAR,this,GetMessageID(),m_attackCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,this,GetMessageID(),m_evadeCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,this,GetMessageID(),m_getPowerupCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_NO_ASTEROIDS,this,GetMessageID(),m_idleCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_ASTEROID_NEAR,this,GetMessageID(),m_attackCallback);
 	}
 
 	//---------------------------------------------------------
-	public void exit()
+	public void Exit()
 	{
-		MessagePump.Instance().UnRegisterForMessage(AnonymousEnum.MESSAGE_WILL_COLLIDE,GetMessageID());
-		MessagePump.Instance().UnRegisterForMessage(AnonymousEnum.MESSAGE_POWERUP_NEAR,GetMessageID());
-		MessagePump.Instance().UnRegisterForMessage(AnonymousEnum.MESSAGE_NO_ASTEROIDS,GetMessageID());
-		MessagePump.Instance().UnRegisterForMessage(AnonymousEnum.MESSAGE_ASTEROID_NEAR,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_NO_ASTEROIDS,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_ASTEROID_NEAR,GetMessageID());
 	
 		//send out messages to stop the ship
-		Message newMsg = new Message(AnonymousEnum.MESSAGE_SHIP_TOTAL_STOP);
+		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP);
 		newMsg.m_fromID = GetMessageID();
-		MessagePump.Instance().SendMessage(newMsg);
+		dg_MessagePump.Instance().SendMessage(newMsg);
 	}
 
+	@Override
+	void Init() {
+		// TODO Auto-generated method stub			
+	}
 	//callbacks for handling messages
 	public EvadeCallback m_evadeCallback;
 	public IdleCallback m_idleCallback;

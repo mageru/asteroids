@@ -1,52 +1,55 @@
 package reuze.aifiles;
 
+import reuze.aifiles.dg_MessState.MSGStates;
+import reuze.aifiles.dg_MessState.States;
+
 public class dg_Message {
 	
-	int m_typeID;
-	int m_fromID;
+	MSGStates m_typeID;
+	public int m_fromID;
 	private int m_toID;
 	public float m_timer;
 	private boolean m_delivered;
 	
 	
 	public dg_Message() {
-		this.setM_typeID(-1);
+		this.setM_typeID(null);
 	}
 	
-	public dg_Message(int type) {
-		this.setM_typeID(type);
+	public dg_Message(MSGStates messageChangeState) {
+		this.setM_typeID(messageChangeState);
 		this.setM_delivered(false);
 		this.setM_timer(0.0f);
 	}
 
 	public class DataMessage<T> extends dg_Message
 	{
-		public DataMessage(int type, T data)
+		public DataMessage(MSGStates messageChangeState, States mfsmStateEvade)
 		{
-			super(type);
-			m_dataStorage = data;
+			super(messageChangeState);
+			m_dataStorage = mfsmStateEvade;
 		}
 		public void Dispose()
 		{
 		}
 
 		//data member
-		public T m_dataStorage;
+		public States m_dataStorage;
 	}
 	
 	/**
 	 * @return the m_typeID
 	 */
-	public int getM_typeID() {
+	public MSGStates getM_typeID() {
 		return m_typeID;
 	}
 
 
 	/**
-	 * @param m_typeID the m_typeID to set
+	 * @param messageChangeState the m_typeID to set
 	 */
-	public void setM_typeID(int m_typeID) {
-		this.m_typeID = m_typeID;
+	public void setM_typeID(MSGStates messageChangeState) {
+		this.m_typeID = messageChangeState;
 	}
 
 
