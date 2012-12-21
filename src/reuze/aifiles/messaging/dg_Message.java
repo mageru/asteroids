@@ -101,10 +101,39 @@ public class dg_Message {
 	public void setM_delivered(boolean m_delivered) {
 		this.m_delivered = m_delivered;
 	}
+	public static String GetMessageName(int type)
+	{
+		switch(type)
+		{
+			case 0:
+				return "Will Collide";
+			case 1:
+				return "Wont Collide";
+			case 2:
+				return "No Asteroids";
+			case 3:
+				return "No Powerups";
+			case 4:
+				return "Asteroid Far";
+			case 5:
+				return "Asteroid Near";
+			case 6:
+				return "Powerup Near";
+			case 7:
+				return "Powerup Far";
+			case 8:
+				return "Change State";
+			case 9:
+				return "Ship Total Stop";
+			default:
+				return "Error Message";
+		}
+	}
+
 
 	@Override
 	public String toString() {
-		return "dg_Message [m_typeID=" + m_typeID + ", m_fromID=" + m_fromID
+		return "dg_Message [m_typeID=" + m_typeID + ",m_Name=" + GetMessageName(m_typeID) + ", m_fromID=" + m_fromID
 				+ ", m_toID=" + m_toID + ", m_timer=" + m_timer
 				+ ", m_delivered=" + m_delivered + "]";
 	}

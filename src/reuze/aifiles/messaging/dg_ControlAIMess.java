@@ -48,13 +48,13 @@ public class dg_ControlAIMess extends dg_ControlAI {
 			    m_machine.AddState(idle);
 			    //m_machine.SetDefaultState(idle);
 			    m_machine.SetDefaultState(approach);
-			    m_messReceiver = new MessageReciever();
 			    m_machine.Reset();
 			}
 
 			//---------------------------------------------------------
 			public void Init()
 			{
+			    m_messReceiver = new MessageReciever();
 			    m_willCollide  = false;
 			    m_powerupNear  = false;
 			    m_nearestAsteroid = null;
