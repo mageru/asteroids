@@ -170,6 +170,8 @@ public class dg_GameSession {
 	}
 	public void Update(float dt)
 	{
+		dg_MessagePump.Instance().Update(dt);
+		
 		m_activeObj.addAll(m_pending);
 		m_pending.clear();
 		for (dg_GameObject list1:m_activeObj)

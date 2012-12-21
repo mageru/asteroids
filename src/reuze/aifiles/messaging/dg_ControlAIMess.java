@@ -1,6 +1,7 @@
 package reuze.aifiles.messaging;
 
 import reuze.aifiles.messaging.dg_MessState.MSGStates;
+import reuze.aifiles.messaging.dg_MessagePump.MessageReciever;
 
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_InterpolateLerp;
@@ -21,6 +22,7 @@ public class dg_ControlAIMess extends dg_ControlAI {
 	    float       m_maxSpeed;
 		//data
 		dg_MessMachine m_machine;
+		MessageReciever m_messReceiver;
 		public dg_ControlAIMess(dg_Ship ship) {
 			super(ship);
 			dg_MessagePump thePump = new dg_MessagePump();
@@ -46,6 +48,7 @@ public class dg_ControlAIMess extends dg_ControlAI {
 			    m_machine.AddState(idle);
 			    //m_machine.SetDefaultState(idle);
 			    m_machine.SetDefaultState(approach);
+			    m_messReceiver = new MessageReciever();
 			    m_machine.Reset();
 			}
 

@@ -1,5 +1,7 @@
 package reuze.aifiles.messaging;
 
+import reuze.aifiles.messaging.dg_MessagePump.MessageReciever;
+
 import com.software.reuze.gb_Sphere;
 import com.software.reuze.gb_Vector3;
 import com.software.reuze.m_MathUtils;
@@ -39,6 +41,7 @@ public abstract class dg_GameObject {
 		    m_collisionFlags= OBJ_NONE;
 		    m_type			= OBJ_NONE;
 		    m_lifeTimer		= NO_LIFE_TIMER;
+		    m_messReceiver = new MessageReciever();
 		}
 		public gb_Vector3 Update(float dt) {
 			m_velocity.add(m_acceleration.tmp().mul(dt));
@@ -93,6 +96,11 @@ public abstract class dg_GameObject {
 					break;
 			}
 		}
+		
+		public int GetMessageID() {
+			return this.m_messReceiver.m_ID;
+		}
+		
 		public gb_Vector3 UnitVectorFacing() {//unit vector in facing direction
 			return new gb_Vector3(Math.cos(-Math.PI*m_angle/180.0),Math.sin(-Math.PI*m_angle/180.0),0);
 		}
@@ -114,6 +122,7 @@ public abstract class dg_GameObject {
 	    ;
 		
 		//data
+		MessageReciever m_messReceiver;
 		gb_Vector3	m_position;	  
 		gb_Vector3	m_axis;	  
 		float		m_angle;  
@@ -131,6 +140,9 @@ public abstract class dg_GameObject {
 		static int id;
 		public boolean IsIntersecting(gb_Vector3 p1, gb_Vector3 p2) {
 			return m_boundSphere.intersects(p1,p2);
+		
+
+		
 		}
 		@Override
 		public String toString() {

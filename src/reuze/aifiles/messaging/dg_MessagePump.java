@@ -36,9 +36,9 @@ public class dg_MessagePump {
 	
 	
 	public static class MessageReciever {
-		public int m_ID;
+		public static int m_ID;
 		public MessageReciever() {
-			this.m_ID = dg_MessagePump.GetUniqueMessageID();
+			m_ID = dg_MessagePump.GetUniqueMessageID();
 		}		
 	}
 	
@@ -72,6 +72,7 @@ public class dg_MessagePump {
 		//Iterator<dg_Message> msgItr = m_messageQueue.iterator();
 		for(dg_Message pMsg : m_messageQueue)
 		{			
+			System.out.println(pMsg);
 			if(pMsg.m_timer >= 0)
 			{
 				//delayed message, decrement timer

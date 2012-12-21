@@ -6,8 +6,8 @@ public class dg_Message {
 	
 	int m_typeID;
 	int m_fromID;
-	private int m_toID;
-	public float m_timer;
+	int m_toID;
+	float m_timer;
 	boolean m_delivered;
 	
 	
@@ -100,6 +100,13 @@ public class dg_Message {
 	 */
 	public void setM_delivered(boolean m_delivered) {
 		this.m_delivered = m_delivered;
+	}
+
+	@Override
+	public String toString() {
+		return "dg_Message [m_typeID=" + m_typeID + ", m_fromID=" + m_fromID
+				+ ", m_toID=" + m_toID + ", m_timer=" + m_timer
+				+ ", m_delivered=" + m_delivered + "]";
 	}
 }
 
