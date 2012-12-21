@@ -11,7 +11,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_EVADE);
+			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
@@ -22,7 +22,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_EVADE);
+			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_EVADE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);
@@ -34,7 +34,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_ATTACK);
+			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_ATTACK);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);
@@ -46,7 +46,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_GETPOWERUP);
+			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_GETPOWERUP);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);
@@ -58,7 +58,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE,States.MFSM_STATE_IDLE);
+			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_IDLE);
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);

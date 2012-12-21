@@ -4,7 +4,7 @@ import reuze.aifiles.messaging.dg_MessState.MSGStates;
 
 public class dg_Message {
 	
-	MSGStates m_typeID;
+	int m_typeID;
 	int m_fromID;
 	private int m_toID;
 	public float m_timer;
@@ -12,11 +12,11 @@ public class dg_Message {
 	
 	
 	public dg_Message() {
-		this(MSGStates.MESSAGE_DEFAULT);
+		this(MSGStates.MESSAGE_DEFAULT.ordinal());
 	}
 	
-	public dg_Message(MSGStates messageShipTotalStop) {
-		this.setM_typeID(messageShipTotalStop);
+	public dg_Message(int i) {
+		this.setM_typeID(i);
 		this.setM_delivered(false);
 		this.setM_timer(0.0f);
 	}
@@ -26,16 +26,16 @@ public class dg_Message {
 	/**
 	 * @return the m_typeID
 	 */
-	public MSGStates getM_typeID() {
+	public int getM_typeID() {
 		return m_typeID;
 	}
 
 
 	/**
-	 * @param messageShipTotalStop the m_typeID to set
+	 * @param i the m_typeID to set
 	 */
-	public void setM_typeID(MSGStates messageShipTotalStop) {
-		this.m_typeID = messageShipTotalStop;
+	public void setM_typeID(int i) {
+		this.m_typeID = i;
 	}
 
 

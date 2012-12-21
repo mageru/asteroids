@@ -139,12 +139,12 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public REGState RegisterForMessage(MSGStates messageWillCollide, Object parent, int objectID, dg_Callback cBack)
+	public REGState RegisterForMessage(int i, Object parent, int objectID, dg_Callback cBack)
 	{
 		//only register once
 		//dg_MessageType mType = m_messageTypes.get(type);
 		//dg_MessageType pmtype = mType.second;
-		dg_MessageType mType = m_messageTypes.get(messageWillCollide);
+		dg_MessageType mType = m_messageTypes.get(i);
 		
 		if(mType == null)
 			return REGState.REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM;
@@ -167,10 +167,10 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public void UnRegisterForMessage(MSGStates messageAsteroidNear, int objectID)
+	public void UnRegisterForMessage(int i, int objectID)
 	{
 		//find entry
-		dg_MessageType mType = m_messageTypes.get(messageAsteroidNear);
+		dg_MessageType mType = m_messageTypes.get(i);
 	
 		if(mType == null)
 			return;

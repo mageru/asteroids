@@ -73,17 +73,17 @@ public class dg_MStateEvade extends dg_MessState {
 	public void Exit()
 	{
 		
-		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WONT_COLLIDE,GetMessageID());
+		dg_MessagePump.Instance().UnRegisterForMessage(MSGStates.MESSAGE_WONT_COLLIDE.ordinal(),GetMessageID());
 		
 		//send out messages to stop the ship
-		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP);
+		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP.ordinal());
 		newMsg.m_fromID = GetMessageID();
 		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
 		
 	}
 	@Override
 	void Enter() {
-		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WONT_COLLIDE,this,GetMessageID(),m_idleCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WONT_COLLIDE.ordinal(),this,GetMessageID(),m_idleCallback);
 
 	}
 

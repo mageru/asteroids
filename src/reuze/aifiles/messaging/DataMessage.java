@@ -5,7 +5,7 @@ import reuze.aifiles.messaging.dg_MessState.MSGStates;
 
 public class DataMessage<T> extends dg_Message
 {
-	public DataMessage(MSGStates type, reuze.aifiles.messaging.dg_MessState.States mfsmStateEvade)
+	public DataMessage(int type, reuze.aifiles.messaging.dg_MessState.States mfsmStateEvade)
 	{
 		super(type);
 		m_dataStorage = mfsmStateEvade;
