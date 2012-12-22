@@ -23,27 +23,6 @@ public class dg_MStateIdle extends dg_MessState {
 	}
 
 	//---------------------------------------------------------
-	public int CheckTransitions()
-	{
-		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
-
-	    if(parent.m_willCollide)
-	        return States.MFSM_STATE_EVADE.ordinal();
-
-	    if(parent.m_nearestAsteroid!=null)
-	    {
-	        if(parent.m_nearestAsteroidDist > z_app.game.APPROACH_DIST)
-	            return States.MFSM_STATE_APPROACH.ordinal();
-	        else
-	            return States.MFSM_STATE_ATTACK.ordinal();
-	    }
-
-	    if(parent.m_nearestPowerup!=null && 
-		   parent.m_ship.GetShotLevel() < z_app.game.MAX_SHOT_LEVEL)
-	        return States.MFSM_STATE_GETPOWERUP.ordinal();
-
-	    return States.MFSM_STATE_IDLE.ordinal();
-	}
 	@Override
 	void Enter() {
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE.ordinal(),this,GetMessageID(),m_evadeCallback);

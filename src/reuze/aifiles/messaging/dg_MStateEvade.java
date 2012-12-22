@@ -59,18 +59,7 @@ public class dg_MStateEvade extends dg_MessState {
 	    parent.m_debugTxt = "Evade "+newDir;
 	}
 
-	//---------------------------------------------------------
-	public int CheckTransitions()
-	{
-		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
 
-	    if(!parent.m_willCollide)
-	        return States.MFSM_STATE_IDLE.ordinal();
-
-	    return States.MFSM_STATE_EVADE.ordinal();
-	}
-
-	//---------------------------------------------------------
 	public void Exit()
 	{
 		

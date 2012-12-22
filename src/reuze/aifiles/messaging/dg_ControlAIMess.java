@@ -59,7 +59,7 @@ public class dg_ControlAIMess extends dg_ControlAI {
 			    m_powerupNear  = false;
 			    m_nearestAsteroid = null;
 			    m_nearestPowerup  = null;
-			    m_safetyRadius    = 15.0f;
+			    m_safetyRadius    = 18.0f;
 			    m_maxSpeed        = z_app.game.AI_MAX_SPEED_TRY;///Game.m_timeScale;
 			    
 			    if(m_target==null)

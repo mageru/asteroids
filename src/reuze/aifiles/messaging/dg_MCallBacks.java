@@ -22,7 +22,7 @@ public class dg_MCallBacks {
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_EVADE.ordinal());
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_APPROACH.ordinal());
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);
