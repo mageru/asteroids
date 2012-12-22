@@ -21,6 +21,9 @@ public class dg_MStateEvade extends dg_MessState {
 	    dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
 	    dg_GameObject asteroid = parent.m_nearestAsteroid;
 	    dg_Ship    ship     = parent.m_ship;
+	    if(asteroid != null) {
+	    	
+	     
 	    gb_Vector3 vecSteer = ship.m_position.tmp().crs(asteroid.m_position);
 	    gb_Vector3 vecBrake = ship.m_position.tmp2().sub(asteroid.m_position);
 	    vecSteer.add(vecBrake);
@@ -57,6 +60,7 @@ public class dg_MStateEvade extends dg_MessState {
 	    parent.m_target.m_position = parent.m_nearestAsteroid.m_position;
 	    parent.m_targetDir = newDir;
 	    parent.m_debugTxt = "Evade "+newDir;
+	    }
 	}
 
 
