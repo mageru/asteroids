@@ -1,8 +1,5 @@
 package reuze.aifiles.messaging;
 
-import reuze.aifiles.messaging.dg_MessState.States;
-import reuze.aifiles.messaging.dg_MessState.MSGStates;
-
 public class DataMessage<T> extends dg_Message
 {
 	public DataMessage(int type, reuze.aifiles.messaging.dg_MessState.States mfsmStateEvade)

@@ -10,4 +10,6 @@ public class dg_MessageType {
 
 		//debug data
 		public String m_name;
+		
+		
 }

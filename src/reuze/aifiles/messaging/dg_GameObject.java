@@ -47,7 +47,7 @@ public abstract class dg_GameObject {
 			m_velocity.add(m_acceleration.tmp().mul(dt));
 			//don't clamp bullets
 			if((m_type & OBJ_BULLET)==0)
-				gb_Vector3.clamp(m_velocity,0.0f,z_app.game.AI_MAX_SPEED_TRY);
+				gb_Vector3.clamp(m_velocity,0.0f,dg_GameSession.AI_MAX_SPEED_TRY);
 
 		    m_position.add(m_velocity.tmp().mul(dt));
 
@@ -98,7 +98,7 @@ public abstract class dg_GameObject {
 		}
 		
 		public int GetMessageID() {
-			return this.m_messReceiver.m_ID;
+			return MessageReciever.m_ID;
 		}
 		
 		public gb_Vector3 UnitVectorFacing() {//unit vector in facing direction
@@ -106,6 +106,11 @@ public abstract class dg_GameObject {
 		}
 		public gb_Vector3 UnitVectorVelocity() {//unit vector in velocity direction
 			return m_velocity.cpy().nor();
+		}
+		public void Dispose()
+		{
+			dg_MessagePump.Instance();
+			dg_MessagePump.UnRegisterAll(MessageReciever.m_ID);
 		}
 	    
 

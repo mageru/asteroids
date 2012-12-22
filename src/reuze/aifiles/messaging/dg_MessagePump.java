@@ -25,9 +25,10 @@ public class dg_MessagePump {
 	{
 		return inst;
 	}
+	
 	public static void setInstance(dg_MessagePump pump)
 	{
-		inst = new dg_MessagePump();
+		inst = new dg_MessagePump();		
 	}
 	
 	public static HashMap<Integer,dg_MessageType> m_messageTypes = new HashMap<Integer, dg_MessageType>();
@@ -72,7 +73,7 @@ public class dg_MessagePump {
 		//Iterator<dg_Message> msgItr = m_messageQueue.iterator();
 		for(dg_Message pMsg : m_messageQueue)
 		{			
-			System.out.println(pMsg);
+			//System.out.println(pMsg);
 			if(pMsg.m_timer >= 0)
 			{
 				//delayed message, decrement timer
@@ -92,15 +93,16 @@ public class dg_MessagePump {
 				//dg_MessageType pmType = ;
 				
 				//Iterator<MessageReg> msgReg = mType.m_messageRegistrations.iterator();
-				
-				for(dg_MessageReg msg : mType.m_messageRegistrations)
-				{
-					dg_MessageReg pmReg = msg;
-					//deliver message by launching callback
-					if(msg.m_callBack != null)
-						msg.m_callBack.function(pmReg.m_parent,pMsg);
+				if(mType.m_messageRegistrations != null) {
+					for(dg_MessageReg msg : mType.m_messageRegistrations)
+					{
+						dg_MessageReg pmReg = msg;
+						//deliver message by launching callback
+						if(msg.m_callBack != null)
+							msg.m_callBack.function(pmReg.m_parent,pMsg);
+					}
+					pMsg.m_delivered = true;
 				}
-				pMsg.m_delivered = true;
 			}
 		}
 	
@@ -113,20 +115,30 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public void AddMessageToSystem(int messageWontCollide)
+	public static void AddMessageToSystem(int type)
 	{
 		//ensure that this type isn't already in the system
+		Set keyS = m_messageTypes.keySet();
+		
+		int mType;
+		for (Iterator<Integer> it = keyS.iterator(); it.hasNext(); ) {
+			mType = it.next();
+			
+		    System.out.println(mType);
+		}
+		
 
-		try {
-		dg_MessageType mType = m_messageTypes.get(messageWontCollide);
-		}
-		catch(NullPointerException ex) {
+		//try {
+		//mType = m_messageTypes.get(type);
+		//}
+		//catch(NullPointerException ex) {
 			dg_MessageType newType = new dg_MessageType();
-			newType.m_typeID = messageWontCollide;
-			newType.m_name = GetMessageName(messageWontCollide);
-			m_messageTypes.put(messageWontCollide, newType);
+			newType.m_typeID = type;
+			newType.m_name = GetMessageName(type);
+			m_messageTypes.put(type, newType);
+			System.out.println("Putting Message... m_typeID: "+newType.m_typeID+" m_name: "+newType.m_name);
 			//continue;
-		}
+		//}
 		/**
 		if(mType == null)
 		{
@@ -140,21 +152,38 @@ public class dg_MessagePump {
 	}
 
 	//---------------------------------------------------------
-	public REGState RegisterForMessage(int i, Object parent, int objectID, dg_Callback cBack)
+	public static int RegisterForMessage(int i, Object parent, int objectID, dg_Callback cBack)
 	{
 		//only register once
 		//dg_MessageType mType = m_messageTypes.get(type);
 		//dg_MessageType pmtype = mType.second;
 		dg_MessageType mType = m_messageTypes.get(i);
-		
+
 		if(mType == null)
-			return REGState.REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM;
+			return REGState.REGISTER_ERROR_MESSAGE_NOT_IN_SYSTEM.ordinal();
 	
+		
+		dg_MessageReg msgReg;
+		if(mType.m_messageRegistrations != null) {
+			Iterator<dg_MessageReg> it = mType.m_messageRegistrations.iterator();
+			while(it.hasNext()) {
+					msgReg = it.next();			
+					if(msgReg.m_objectID == objectID)
+						return REGState.REGISTER_ERROR_ALREADY_REGISTERED.ordinal();
+			}
+		}
+		else {
+			mType.m_messageRegistrations = new ArrayList<dg_MessageReg>();
+		}
+		
+		/**
 		for(dg_MessageReg msgReg : mType.m_messageRegistrations)
 		{
+			System.out.print("Registering: "+mType.m_name);
 			if(msgReg.m_objectID == objectID)
-				return REGState.REGISTER_ERROR_ALREADY_REGISTERED;
+				return REGState.REGISTER_ERROR_ALREADY_REGISTERED.ordinal();
 		}
+		**/
 		//add new registration
 		dg_MessageReg newRegistration = new dg_MessageReg();
 		newRegistration.m_parent = parent;
@@ -162,7 +191,7 @@ public class dg_MessagePump {
 		newRegistration.m_objectID = objectID;
 	
 		mType.m_messageRegistrations.add(newRegistration);
-		return REGState.REGISTER_MESSAGE_OK;
+		return REGState.REGISTER_MESSAGE_OK.ordinal();
 	
 	
 	}
@@ -249,35 +278,6 @@ public class dg_MessagePump {
 
 	
 	
-	/**
-	public static String GetMessageName(int type) {
-		switch(type) {
-			case MESSAGE_WILL_COLLIDE:
-				return "Will collide";
-			case MESSAGE_WONT_COLLIDE:
-				return "Wont collide";
-			case MESSAGE_NO_ASTEROIDS:
-	            return "No Asteroids";
-	        case MESSAGE_NO_POWERUPS:
-	            return "No Powerups";
-	        case MESSAGE_ASTEROID_FAR:
-	            return "Asteroid Far";
-	        case MESSAGE_ASTEROID_NEAR:
-	            return "Asteroid Near";
-	        case MESSAGE_POWERUP_NEAR:
-	            return "Powerup Near";
-	        case MESSAGE_POWERUP_FAR:
-	            return "Powerup Far";
-	        case MESSAGE_CHANGE_STATE:
-	            return "Change State";
-	        case MESSAGE_SHIP_TOTAL_STOP:
-	            return "Ship Total Stop";
-	        default:
-	            return "Error Message";
-	            break;
-		}
-	}
-	**/
 	final class RefObject<T>
 	{
 		T argvalue;

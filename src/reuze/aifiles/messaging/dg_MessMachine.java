@@ -34,7 +34,7 @@ public class dg_MessMachine extends dg_MessState
 		m_defaultState = null;
 		m_goalState = null;
 		m_states = new ArrayList<dg_MessState>();
-		//dg_MessagePump.RegisterForMessage(MSGStates.MESSAGE_CHANGE_STATE,this,GetMessageID(),m_changeStateCallback);
+		dg_MessagePump.RegisterForMessage(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),this,GetMessageID(),m_changeStateCallback);
 	}
 
 	public void Update(float dt)
