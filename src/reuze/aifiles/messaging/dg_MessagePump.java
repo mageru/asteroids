@@ -107,9 +107,18 @@ public class dg_MessagePump {
 		}
 	
 		//remove all delivered messages from queue
+		/**
 		for(dg_Message msg : m_messageQueue) {
 			if(msg.isM_delivered()) {
-				m_messageQueue.remove(msg);
+				synchronized (m_messageQueue) {
+					m_messageQueue.remove(msg);
+				}
+			}
+		}
+		**/
+		for(int i=0;i<m_messageQueue.size();i++) {
+			if(m_messageQueue.get(i).m_delivered) {
+				m_messageQueue.remove(i);
 			}
 		}
 	}

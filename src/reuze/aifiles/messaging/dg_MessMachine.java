@@ -10,31 +10,31 @@ import reuze.aifiles.messaging.dg_MessState.Types;
 public class dg_MessMachine extends dg_MessState
 {
 	public dg_MessMachine() {
-		this(Types.MFSM_MACH_NONE,null);
+		this(Types.MFSM_MACH_NONE.ordinal(),null);
 	}
 	public void SetDefaultState(dg_MessState state) {
 		m_defaultState = state;
 	}
-	public void SetGoalID(States goal) { m_goalID = goal;}
+	public void SetGoalID(int newState) { m_goalID = newState;}
 	//data
-	public Types m_type;
+	public int m_type;
 	protected ArrayList<dg_MessState> m_states;
 	protected dg_MessState m_currentState;
 	protected dg_MessState m_defaultState;
 	protected dg_MessState m_goalState;
-	protected States m_goalID;
+	protected int m_goalID;
 	protected dg_ChangeStateCallback m_changeStateCallback = new dg_ChangeStateCallback();
 	//constructor/functions
 
-	public dg_MessMachine(Types type, dg_Control parent)
+	public dg_MessMachine(int type, dg_Control parent)
 	{
-		super(States.MFSM_STATE_NONE, parent);
+		super(States.MFSM_STATE_NONE.ordinal(), parent);
 		m_type = type;
 		m_currentState = null;
 		m_defaultState = null;
 		m_goalState = null;
 		m_states = new ArrayList<dg_MessState>();
-		dg_MessagePump.RegisterForMessage(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),this,GetMessageID(),m_changeStateCallback);
+		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),this,GetMessageID(),m_changeStateCallback);
 	}
 
 	public void Update(float dt)
@@ -51,8 +51,8 @@ public class dg_MessMachine extends dg_MessState
 			return;
 
 		//check for transitions, and then update
-		States oldStateID = m_currentState.m_type;
-		m_goalID = m_currentState.CheckTransitions();
+		int oldStateID = m_currentState.m_type;
+		//m_goalID = m_currentState.CheckTransitions();
 		
 		//switch if there was a transition
 		if(m_goalID != oldStateID)
@@ -75,7 +75,7 @@ public class dg_MessMachine extends dg_MessState
 	}
 
 	//---------------------------------------------------------
-	boolean TransitionState(States goal)
+	boolean TransitionState(int m_goalID2)
 	{
 		//don't do anything if you have no states
 		if(m_states.size() == 0 )
@@ -85,7 +85,7 @@ public class dg_MessMachine extends dg_MessState
 		//in the list, and switch to it, otherwise, quit out
 		for(int i =0;i<m_states.size();i++)
 		{
-			if(m_states.get(i).m_type == goal)
+			if(m_states.get(i).m_type == m_goalID2)
 			{
 				m_goalState = m_states.get(i);
 				return true;

@@ -6,7 +6,7 @@ public abstract class dg_MessState
 {
 	//data
 	dg_Control   m_parent;
-	States        m_type;
+	int        m_type;
 	
 	public static enum States
 	{
@@ -63,18 +63,18 @@ public abstract class dg_MessState
 	//constructor/functions
 	public dg_MessState()
 	{
-		this(States.MFSM_STATE_NONE, null);
+		this(States.MFSM_STATE_NONE.ordinal(), null);
 	}
 	
-	public dg_MessState(States type, dg_Control parent)
+	public dg_MessState(int i, dg_Control parent)
 		{
-		m_type = type;m_parent = parent;
+		m_type = i;m_parent = parent;
 		}
 	abstract void Enter();
 	abstract void Exit();	
 	abstract void Update(float dt);
 	abstract void Init();
-	States CheckTransitions() {return States.MFSM_STATE_NONE;}
+	//States CheckTransitions() {return States.MFSM_STATE_NONE;}
 	
 	public int GetMessageID()
 	{

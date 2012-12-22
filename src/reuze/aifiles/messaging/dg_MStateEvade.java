@@ -7,10 +7,11 @@ import reuze.aifiles.messaging.dg_MCallBacks.IdleCallback;
 import reuze.aifiles.messaging.dg_MessState.States;
 
 public class dg_MStateEvade extends dg_MessState {
-	public IdleCallback m_idleCallback;
+	public IdleCallback m_idleCallback = new dg_MCallBacks.IdleCallback();
+	
 	//constructor/functions
     public dg_MStateEvade(dg_Control parent) {
-    	super(States.MFSM_STATE_EVADE,parent);
+    	super(States.MFSM_STATE_EVADE.ordinal(),parent);
     }
     @Override
 	public void Update(float dt)
@@ -59,14 +60,14 @@ public class dg_MStateEvade extends dg_MessState {
 	}
 
 	//---------------------------------------------------------
-	public States CheckTransitions()
+	public int CheckTransitions()
 	{
 		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
 
 	    if(!parent.m_willCollide)
-	        return States.MFSM_STATE_IDLE;
+	        return States.MFSM_STATE_IDLE.ordinal();
 
-	    return States.MFSM_STATE_EVADE;
+	    return States.MFSM_STATE_EVADE.ordinal();
 	}
 
 	//---------------------------------------------------------
@@ -78,7 +79,7 @@ public class dg_MStateEvade extends dg_MessState {
 		//send out messages to stop the ship
 		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP.ordinal());
 		newMsg.m_fromID = GetMessageID();
-		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
+		dg_MessagePump.Instance().SendMessage(newMsg);
 		
 	}
 	@Override

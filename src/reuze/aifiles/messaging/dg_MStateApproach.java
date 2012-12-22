@@ -15,13 +15,13 @@ public class dg_MStateApproach extends dg_MessState
 	//constructor/functions
 	public dg_MStateApproach(dg_Control parent)
 	{
-		super(States.MFSM_STATE_APPROACH,parent);
+		super(States.MFSM_STATE_APPROACH.ordinal(),parent);
 	}
 
 	//---------------------------------------------------------
 	public void Update(float dt)
 	{
-		//turn and then thrust towards closest asteroid
+		//turn and then thrust towards closest asteroid 
 		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
 		dg_GameObject asteroid = parent.m_nearestAsteroid;
 		dg_Ship    ship     = parent.m_ship;
@@ -91,7 +91,7 @@ public class dg_MStateApproach extends dg_MessState
 
 	//---------------------------------------------------------
 	public void Enter()
-	{
+	{		
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_WILL_COLLIDE.ordinal(),this,GetMessageID(),m_evadeCallback);
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_POWERUP_NEAR.ordinal(),this,GetMessageID(),m_getPowerupCallback);
 		dg_MessagePump.Instance().RegisterForMessage(MSGStates.MESSAGE_NO_ASTEROIDS.ordinal(),this,GetMessageID(),m_idleCallback);
@@ -110,7 +110,7 @@ public class dg_MStateApproach extends dg_MessState
 		//send out messages to stop the ship
 		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP.ordinal());
 		newMsg.m_fromID = GetMessageID();
-		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
+		dg_MessagePump.Instance().SendMessage(newMsg);
 		
 	}
 
@@ -119,10 +119,10 @@ public class dg_MStateApproach extends dg_MessState
 		// TODO Auto-generated method stub			
 	}
 	//callbacks for handling messages
-	public EvadeCallback m_evadeCallback;
-	public IdleCallback m_idleCallback;
-	public AttackCallback m_attackCallback;
-	public GetPowerupCallback m_getPowerupCallback;
+	public EvadeCallback m_evadeCallback = new dg_MCallBacks.EvadeCallback();
+	public IdleCallback m_idleCallback = new dg_MCallBacks.IdleCallback();
+	public AttackCallback m_attackCallback = new dg_MCallBacks.AttackCallback();
+	public GetPowerupCallback m_getPowerupCallback = new dg_MCallBacks.GetPowerupCallback();
 }
 
 final class DefineConstantsMStateApproach

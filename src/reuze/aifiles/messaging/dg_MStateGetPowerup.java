@@ -9,11 +9,11 @@ import com.software.reuze.m_MathUtils;
 
 public class dg_MStateGetPowerup extends dg_MessState {
 	//callbacks for handling messages
-	public EvadeCallback m_evadeCallback;
-	public IdleCallback m_idleCallback;
+	public EvadeCallback m_evadeCallback = new dg_MCallBacks.EvadeCallback();
+	public IdleCallback m_idleCallback = new dg_MCallBacks.IdleCallback();
 	//constructor/functions
     public dg_MStateGetPowerup(dg_Control parent) {
-    	super(States.MFSM_STATE_GETPOWERUP,parent);
+    	super(States.MFSM_STATE_GETPOWERUP.ordinal(),parent);
     }
 	public void Update(float dt)
 	{
@@ -87,7 +87,7 @@ public class dg_MStateGetPowerup extends dg_MessState {
 		//send out messages to stop the ship
 		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP.ordinal());
 		newMsg.m_fromID = GetMessageID();
-		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
+		dg_MessagePump.Instance().SendMessage(newMsg);
 	}
 	@Override
 	void Enter() {

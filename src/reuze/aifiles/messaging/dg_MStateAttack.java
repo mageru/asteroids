@@ -19,7 +19,7 @@ public class dg_MStateAttack extends dg_MessState {
 	
 	//constructor/functions
     public dg_MStateAttack(dg_Control parent) {
-    	super(States.MFSM_STATE_ATTACK,parent);
+    	super(States.MFSM_STATE_ATTACK.ordinal(),parent);
     }
     @Override
 	public void Update(float dt)
@@ -71,7 +71,7 @@ public class dg_MStateAttack extends dg_MessState {
 		//send out messages to stop the ship
 		dg_Message newMsg = new dg_Message(MSGStates.MESSAGE_SHIP_TOTAL_STOP.ordinal());
 		newMsg.m_fromID = GetMessageID();
-		dg_MessagePump.Instance().SendMessage((DataMessage<dg_MessState>) newMsg);
+		dg_MessagePump.Instance().SendMessage(newMsg);
 	}
 	@Override
 	void Enter() {		

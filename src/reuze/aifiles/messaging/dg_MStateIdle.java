@@ -7,13 +7,13 @@ import reuze.aifiles.messaging.dg_MCallBacks.GetPowerupCallback;
 import reuze.aifiles.messaging.dg_MessState.States;
 
 public class dg_MStateIdle extends dg_MessState {
-	public EvadeCallback m_evadeCallback;
-	public ApproachCallback m_approachCallback;
-	public AttackCallback m_attackCallback;
-	public GetPowerupCallback m_getPowerupCallback;
+	public EvadeCallback m_evadeCallback = new dg_MCallBacks.EvadeCallback();
+	public ApproachCallback m_approachCallback = new dg_MCallBacks.ApproachCallback();
+	public AttackCallback m_attackCallback = new dg_MCallBacks.AttackCallback();
+	public GetPowerupCallback m_getPowerupCallback = new dg_MCallBacks.GetPowerupCallback();
 	
 	public dg_MStateIdle(dg_Control parent) {
-		super(States.MFSM_STATE_IDLE, parent);
+		super(States.MFSM_STATE_IDLE.ordinal(), parent);
 	}
 	public void Update(float dt)
 	{
@@ -23,26 +23,26 @@ public class dg_MStateIdle extends dg_MessState {
 	}
 
 	//---------------------------------------------------------
-	public States CheckTransitions()
+	public int CheckTransitions()
 	{
 		dg_ControlAIMess parent = (dg_ControlAIMess)m_parent;
 
 	    if(parent.m_willCollide)
-	        return States.MFSM_STATE_EVADE;
+	        return States.MFSM_STATE_EVADE.ordinal();
 
 	    if(parent.m_nearestAsteroid!=null)
 	    {
 	        if(parent.m_nearestAsteroidDist > z_app.game.APPROACH_DIST)
-	            return States.MFSM_STATE_APPROACH;
+	            return States.MFSM_STATE_APPROACH.ordinal();
 	        else
-	            return States.MFSM_STATE_ATTACK;
+	            return States.MFSM_STATE_ATTACK.ordinal();
 	    }
 
 	    if(parent.m_nearestPowerup!=null && 
 		   parent.m_ship.GetShotLevel() < z_app.game.MAX_SHOT_LEVEL)
-	        return States.MFSM_STATE_GETPOWERUP;
+	        return States.MFSM_STATE_GETPOWERUP.ordinal();
 
-	    return States.MFSM_STATE_IDLE;
+	    return States.MFSM_STATE_IDLE.ordinal();
 	}
 	@Override
 	void Enter() {

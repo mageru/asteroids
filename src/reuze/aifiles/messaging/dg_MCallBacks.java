@@ -3,62 +3,62 @@ package reuze.aifiles.messaging;
 import reuze.aifiles.messaging.dg_MessState.MSGStates;
 import reuze.aifiles.messaging.dg_MessState.States;
 import reuze.aifiles.messaging.DataMessage;
-import reuze.aifiles.messaging.dg_MessState;
+
 
 public class dg_MCallBacks {
-	public class EvadeCallback extends dg_Callback
+	public static class EvadeCallback extends dg_Callback
 	{
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_EVADE);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_EVADE.ordinal());
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
-	public class ApproachCallback extends dg_Callback
+	public static class ApproachCallback extends dg_Callback
 	{
 
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_EVADE);
-			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
-			
-			dg_MessagePump.Instance().SendMessage(newMsg);
-		}
-	}
-	public class AttackCallback extends dg_Callback
-	{
-
-		//---------------------------------------------------------
-		void function(Object parent, dg_Message msg)
-		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_ATTACK);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_EVADE.ordinal());
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
-	public class GetPowerupCallback extends dg_Callback
+	public static class AttackCallback extends dg_Callback
 	{
 
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_GETPOWERUP);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_ATTACK.ordinal());
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);
 		}
 	}
-	public class IdleCallback extends dg_Callback
+	public static class GetPowerupCallback extends dg_Callback
 	{
 
 		//---------------------------------------------------------
 		void function(Object parent, dg_Message msg)
 		{
-			reuze.aifiles.messaging.DataMessage<reuze.aifiles.messaging.dg_MessState> newMsg = new DataMessage<reuze.aifiles.messaging.dg_MessState>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_IDLE);
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_GETPOWERUP.ordinal());
+			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
+			
+			dg_MessagePump.Instance().SendMessage(newMsg);
+		}
+	}
+	public static class IdleCallback extends dg_Callback
+	{
+
+		//---------------------------------------------------------
+		void function(Object parent, dg_Message msg)
+		{
+			DataMessage<Integer> newMsg = new DataMessage<Integer>(MSGStates.MESSAGE_CHANGE_STATE.ordinal(),States.MFSM_STATE_IDLE.ordinal());
 			newMsg.m_fromID = ((dg_MessState)parent).GetMessageID();
 			
 			dg_MessagePump.Instance().SendMessage(newMsg);
